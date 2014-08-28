@@ -1,4 +1,4 @@
-tmux_away2
+tmux_away
 ==========
 
 irssi script to set away/unaway based on tmux status
