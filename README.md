@@ -5,12 +5,15 @@ irssi script to set away/unaway based on tmux status
 
 This is most useful when combined with something like the AwayMail
 plugin:
+
 https://github.com/alanhamlett/AwayMail-Irssi-Plugin
 
 ### Installation
+```
 git clone https://github.com/jcvernaleo/tmux_away
 cp tmux_away/tmux_away.pl ~/.irssi/scripts/
 ln -s ~/.irssi/scripts/tmux_away.pl ~/.irssi/scripts/tmux_away.pl
+```
 
 ### Usage
 
@@ -31,7 +34,7 @@ most uses.
 /set tmux_away_nick <string>
 ```
 
-### Maintained
+### Maintainer
 John C. Vernaleo <john@netpurgatory.com>
 
 ### License
