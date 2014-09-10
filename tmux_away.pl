@@ -4,7 +4,7 @@ use FileHandle;
 
 use vars qw($VERSION %IRSSI);
 
-$VERSION = "2.0";
+$VERSION = "2.1";
 %IRSSI = (
     authors     => 'jcv',
     name        => 'tmux_away',
@@ -27,13 +27,14 @@ $VERSION = "2.0";
 # put this script into your autorun directory and/or load it with
 #  /SCRIPT LOAD <name>
 #
-# there are 5 settings available:
+# there are 6 settings available:
 #
 # /set tmux_away_active ON/OFF/TOGGLE
 # /set tmux_away_repeat <integer>
 # /set tmux_away_message <string>
 # /set tmux_away_window <string>
 # /set tmux_away_nick <string>
+# /set tmux_away_cmd <string>
 #
 # active means that you will be only set away/unaway, if this
 #   flag is set, default is ON
@@ -44,7 +45,8 @@ $VERSION = "2.0";
 #   to this window, if it sets you away, default is '1'
 # nick is the new nick, if the script goes away
 #   will only be used it not empty
-
+# tmux_away_cmd is an irssi command to run on return from away.  This should be
+#   without the leading /
 
 # variables
 my $timer_name = undef;
@@ -81,6 +83,7 @@ Irssi::settings_add_int('misc', $IRSSI{'name'} . '_repeat', 5);
 Irssi::settings_add_str('misc', $IRSSI{'name'} . '_message', "not here...");
 Irssi::settings_add_str('misc', $IRSSI{'name'} . '_window', "1");
 Irssi::settings_add_str('misc', $IRSSI{'name'} . '_nick', "");
+Irssi::settings_add_str('misc', $IRSSI{'name'} . '_cmd', "");
 
 
 # check, set or reset the away status
@@ -159,6 +162,11 @@ sub tmux_away {
           $_->command("NICK " . $old_nicks{$_->{'tag'}});
           $old_nicks{$_->{'tag'}} = "";
         }
+	# run command specified in tmux_away_cmd
+	my $cmd = Irssi::settings_get_str($IRSSI{'name'} . '_cmd');
+	if ($cmd ne "") {
+	    $_->command($cmd);
+	}
       }
       $away_status = $status;
     }
