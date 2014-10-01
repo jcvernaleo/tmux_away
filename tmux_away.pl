@@ -4,7 +4,7 @@ use FileHandle;
 
 use vars qw($VERSION %IRSSI);
 
-$VERSION = "2.1";
+$VERSION = "2.2";
 %IRSSI = (
     authors     => 'jcv',
     name        => 'tmux_away',
@@ -34,6 +34,7 @@ $VERSION = "2.1";
 # /set tmux_away_message <string>
 # /set tmux_away_window <string>
 # /set tmux_away_nick <string>
+# /set tmux_away_beforecmd <string>
 # /set tmux_away_cmd <string>
 #
 # active means that you will be only set away/unaway, if this
@@ -45,7 +46,9 @@ $VERSION = "2.1";
 #   to this window, if it sets you away, default is '1'
 # nick is the new nick, if the script goes away
 #   will only be used it not empty
-# tmux_away_cmd is an irssi command to run on return from away.  This should be
+# beforecmd is an irssi command to run when away is first set.  This
+#   should be without the leading /
+# cmd is an irssi command to run on return from away.  This should be
 #   without the leading /
 
 # variables
@@ -139,6 +142,11 @@ sub tmux_away {
               $_->command("NICK " . Irssi::settings_get_str($IRSSI{'name'} . '_nick'));
             }
           }
+	  # run command specified in tmux_away_beforecmd
+	  my $cmd = Irssi::settings_get_str($IRSSI{'name'} . '_beforecmd');
+	  if ($cmd ne "") {
+	      $_->command($cmd);
+	  }
         } else {
           # user is already away, remember this
           $away{$_->{'tag'}} = 1;
