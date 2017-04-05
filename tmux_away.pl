@@ -86,6 +86,7 @@ Irssi::settings_add_int('misc', $IRSSI{'name'} . '_repeat', 5);
 Irssi::settings_add_str('misc', $IRSSI{'name'} . '_message', "not here...");
 Irssi::settings_add_str('misc', $IRSSI{'name'} . '_window', "1");
 Irssi::settings_add_str('misc', $IRSSI{'name'} . '_nick', "");
+Irssi::settings_add_str('misc', $IRSSI{'name'} . '_beforecmd', "");
 Irssi::settings_add_str('misc', $IRSSI{'name'} . '_cmd', "");
 
 
